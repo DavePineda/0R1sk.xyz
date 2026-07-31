@@ -303,12 +303,6 @@ export const researchConfig: ResearchConfig = {
       image: "images/research-1.jpg",
     },
     {
-      title: "Respuesta a Incidentes",
-      year: "2025",
-      discipline: "Operaciones SOC",
-      image: "images/research-2.jpg",
-    },
-    {
       title: "Protección de Datos",
       year: "2025",
       discipline: "Cumplimiento Normativo",
@@ -327,22 +321,10 @@ export const researchConfig: ResearchConfig = {
       image: "images/capability-1.jpg",
     },
     {
-      title: "Ciberseguridad IoT",
-      year: "2024",
-      discipline: "Dispositivos Conectados",
-      image: "images/capability-2.jpg",
-    },
-    {
       title: "Auditoría de Seguridad",
       year: "2024",
       discipline: "Evaluación de Controles",
       image: "images/capability-3.jpg",
-    },
-    {
-      title: "Forense Digital",
-      year: "2024",
-      discipline: "Investigación Digital",
-      image: "images/capability-4.jpg",
     },
     {
       title: "Seguridad de Redes",
@@ -361,12 +343,6 @@ export const researchConfig: ResearchConfig = {
       year: "2023",
       discipline: "Pruebas de Intrusión",
       image: "images/research-3.jpg",
-    },
-    {
-      title: "Criptografía",
-      year: "2023",
-      discipline: "Protección de Datos",
-      image: "images/research-4.jpg",
     },
   ],
 };
@@ -462,6 +438,6 @@ export const footerConfig: FooterConfig = {
   bottomLinks: [
     { label: "Youtube", href: "https://www.youtube.com/@0R1sk" },
     { label: "Twitter", href: "https://x.com/Resilienciax100" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/0r1sk/" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/davidjuliangarcia" },
   ],
 };

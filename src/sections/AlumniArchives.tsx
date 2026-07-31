@@ -55,22 +55,6 @@ export default function AlumniArchives() {
       <div style={{ maxWidth: 1400, margin: '0 auto' }}>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between" style={{ gap: 24, marginBottom: 60 }}>
           <div>
-            {researchConfig.sectionLabel && (
-              <div
-                className="mb-6"
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: 12,
-                  fontWeight: 300,
-                  letterSpacing: '3px',
-                  textTransform: 'uppercase',
-                  color: '#dadada',
-                  opacity: 0.6,
-                }}
-              >
-                {researchConfig.sectionLabel}
-              </div>
-            )}
             <h2
               id="alumni-title"
               style={{
@@ -84,7 +68,7 @@ export default function AlumniArchives() {
                 textWrap: 'balance',
               }}
             >
-              Especializaciones que respaldan cada servicio
+              {researchConfig.sectionLabel}
             </h2>
           </div>
         </div>
