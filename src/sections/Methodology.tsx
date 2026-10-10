@@ -1,44 +1,9 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import SectionHeader from '../components/SectionHeader';
+import { useReveal } from '../hooks/use-reveal';
 import { methodologyConfig } from '../config';
 
 export default function Methodology() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const items = itemRefs.current.filter(Boolean) as HTMLDivElement[];
-    const observers: IntersectionObserver[] = [];
-
-    items.forEach((item, index) => {
-      gsap.set(item, { opacity: 0, y: 40 });
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              gsap.to(item, {
-                opacity: 1,
-                y: 0,
-                duration: 0.9,
-                delay: index * 0.15,
-                ease: 'power3.out',
-              });
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.2 }
-      );
-
-      observer.observe(item);
-      observers.push(observer);
-    });
-
-    return () => {
-      observers.forEach((o) => o.disconnect());
-    };
-  }, []);
+  const reveal = useReveal<HTMLDivElement>();
 
   if (!methodologyConfig.sectionLabel && methodologyConfig.items.length === 0) {
     return null;
@@ -47,137 +12,30 @@ export default function Methodology() {
   return (
     <section
       id="methodology"
-      ref={sectionRef}
       aria-labelledby="methodology-title"
-      className="relative"
-      style={{
-        padding: '150px 5vw',
-        minHeight: '60vh',
-        background: '#0a0a0a',
-        position: 'relative',
-        zIndex: 2,
-      }}
+      className="zr-section overflow-hidden border-y border-zr-line bg-zr-surface/40"
     >
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        {methodologyConfig.sectionLabel && (
-          <div
-            className="mb-6"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: 12,
-              fontWeight: 300,
-              letterSpacing: '3px',
-              textTransform: 'uppercase',
-              color: '#dadada',
-              opacity: 0.6,
-            }}
-          >
-            {methodologyConfig.sectionLabel}
-          </div>
-        )}
-        <div
-          className="mb-16"
-          style={{
-            width: '100%',
-            height: 1,
-            background: 'rgba(255, 255, 255, 0.1)',
-          }}
+      <div className="zr-grid-bg pointer-events-none absolute inset-0" aria-hidden="true" />
+      <div className="zr-container relative">
+        <SectionHeader
+          id="methodology-title"
+          index="02"
+          label={methodologyConfig.sectionLabel}
+          title={methodologyConfig.title}
+          description={methodologyConfig.description}
         />
 
-        {methodologyConfig.title && (
-          <h2
-            id="methodology-title"
-            style={{
-              fontFamily: "'EB Garamond', serif",
-              fontWeight: 400,
-              fontSize: 'clamp(32px, 4vw, 64px)',
-              lineHeight: 1.15,
-              letterSpacing: '-1px',
-              color: '#ffffff',
-              margin: '0 0 24px 0',
-              textWrap: 'balance',
-            }}
-          >
-            {methodologyConfig.title}
-          </h2>
-        )}
-
-        {methodologyConfig.description && (
-          <p
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontWeight: 200,
-              fontSize: 17,
-              lineHeight: 1.85,
-              color: '#dadada',
-              margin: '0 0 80px 0',
-              maxWidth: 720,
-              textWrap: 'pretty',
-            }}
-          >
-            {methodologyConfig.description}
-          </p>
-        )}
-
-        <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: 40 }}>
+        <div className="grid gap-5 md:grid-cols-3">
           {methodologyConfig.items.map((item, i) => (
-            <div
-              key={item.acronym}
-              ref={(el) => { itemRefs.current[i] = el; }}
-              className="group"
-              style={{
-                padding: 36,
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                background: 'rgba(255, 255, 255, 0.01)',
-                transition: 'border-color 0.4s ease, background 0.4s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(200, 170, 130, 0.4)';
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.01)';
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: "'GeistMono', monospace",
-                  fontSize: 13,
-                  fontWeight: 400,
-                  letterSpacing: '2px',
-                  textTransform: 'uppercase',
-                  color: 'rgba(200, 170, 130, 1)',
-                  marginBottom: 12,
-                }}
-              >
-                {item.acronym}
+            <div key={item.acronym} ref={reveal(i)} className="zr-card flex flex-col bg-zr-bg/80 p-7">
+              <div className="mb-6 flex items-center justify-between">
+                <span className="font-mono text-[28px] font-normal tracking-tight text-zr-accent">{item.acronym}</span>
+                <span className="rounded-full border border-zr-amber/30 px-2.5 py-1 font-mono text-[11px] text-zr-amber">
+                  framework
+                </span>
               </div>
-              <h3
-                style={{
-                  fontFamily: "'EB Garamond', serif",
-                  fontWeight: 400,
-                  fontSize: 24,
-                  color: '#ffffff',
-                  margin: '0 0 16px 0',
-                  lineHeight: 1.2,
-                }}
-              >
-                {item.name}
-              </h3>
-              <p
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontWeight: 200,
-                  fontSize: 14,
-                  lineHeight: 1.8,
-                  color: '#dadada',
-                  margin: 0,
-                  opacity: 0.85,
-                }}
-              >
-                {item.description}
-              </p>
+              <h3 className="mb-3 font-display text-lg font-semibold leading-snug text-white">{item.name}</h3>
+              <p className="text-[15px] leading-relaxed text-zr-muted">{item.description}</p>
             </div>
           ))}
         </div>

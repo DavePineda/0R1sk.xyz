@@ -4,7 +4,25 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+        mono: ['GeistMono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+      },
       colors: {
+        // Paleta Zero R1sk (mantener sincronizada con :root en index.css)
+        zr: {
+          bg: '#04060c',
+          surface: '#0a0f1c',
+          elevated: '#101829',
+          line: 'rgba(120, 180, 255, 0.14)',
+          text: '#e4ecf7',
+          muted: '#93a3ba',
+          accent: '#4fd1ff',
+          cyan: '#9be7ff',
+          amber: '#ff9f43',
+          danger: '#ff5c5c',
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

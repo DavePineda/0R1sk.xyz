@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
-import { footerConfig } from '../config';
+import { ArrowRight } from 'lucide-react';
+import BrandMark from '../components/BrandMark';
+import { footerConfig, siteConfig } from '../config';
 
 export default function Footer() {
   if (!footerConfig.heading && footerConfig.columns.length === 0) {
@@ -9,143 +11,80 @@ export default function Footer() {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith('#')) {
       e.preventDefault();
-      const el = document.querySelector(href);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
-    <footer
-      id="footer"
-      style={{
-        padding: '120px 5vw 60px',
-        background: '#0a0a0a',
-        position: 'relative',
-        zIndex: 2,
-        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-      }}
-    >
-      <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+    <footer id="footer" className="relative z-[2] border-t border-zr-line">
+      <div className="zr-container py-16 md:py-20">
         {footerConfig.heading && (
-          <a
-            href="#contact"
-            onClick={(e) => handleClick(e, '#contact')}
-            className="block text-white no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/50 rounded-sm"
-            style={{ width: 'fit-content', marginBottom: 80 }}
-            aria-label="Ir al formulario de contacto"
-          >
-            <h2
-              style={{
-                fontFamily: "'EB Garamond', serif",
-                fontWeight: 400,
-                fontSize: 'clamp(40px, 5vw, 80px)',
-                lineHeight: 1.1,
-                letterSpacing: '-1.44px',
-                color: '#ffffff',
-                margin: 0,
-                transition: 'color 0.4s ease',
-              }}
-              className="hover:text-[rgba(200,170,130,1)]"
-            >
+          <div className="relative mb-16 flex flex-col items-start justify-between gap-8 overflow-hidden rounded-2xl border border-zr-accent/25 p-8 md:flex-row md:items-center md:p-12">
+            <img
+              src="/images/research-2.jpg"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-50"
+            />
+            <div
+              className="pointer-events-none absolute inset-0 bg-gradient-to-r from-zr-bg via-zr-bg/85 to-zr-bg/30"
+              aria-hidden="true"
+            />
+            <h2 className="relative max-w-xl font-display text-[clamp(26px,3vw,40px)] font-semibold leading-tight text-white">
               {footerConfig.heading}
             </h2>
-          </a>
-        )}
-
-        {footerConfig.columns.length > 0 && (
-          <div
-            className="grid grid-cols-1 md:grid-cols-2"
-            style={{ gap: 60, marginBottom: 120 }}
-          >
-            {footerConfig.columns.map((column, colIndex) => (
-              <div key={colIndex} className="flex flex-col" style={{ gap: 16 }}>
-                {column.title && (
-                  <span
-                    style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: 12,
-                      fontWeight: 300,
-                      letterSpacing: '3px',
-                      textTransform: 'uppercase',
-                      color: '#dadada',
-                      opacity: 0.6,
-                      marginBottom: 8,
-                    }}
-                  >
-                    {column.title}
-                  </span>
-                )}
-                {column.links.map((link) => (
-                  link.href.startsWith('/') ? (
-                    <Link
-                      key={link.label}
-                      to={link.href}
-                      className="nav-link focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/50 rounded-sm"
-                      style={{ width: 'fit-content' }}
-                    >
-                      {link.label}
-                    </Link>
-                  ) : (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      onClick={(e) => handleClick(e, link.href)}
-                      className="nav-link focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/50 rounded-sm"
-                      style={{ width: 'fit-content' }}
-                      {...(link.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    >
-                      {link.label}
-                    </a>
-                  )
-                ))}
-              </div>
-            ))}
+            <a href="#contact" onClick={(e) => handleClick(e, '#contact')} className="zr-btn-primary relative shrink-0">
+              Agenda una evaluación
+              <ArrowRight size={16} aria-hidden="true" />
+            </a>
           </div>
         )}
 
-        <div
-          className="flex flex-col md:flex-row items-start md:items-center justify-between"
-          style={{
-            paddingTop: 24,
-            borderTop: '1px solid rgba(255, 255, 255, 0.06)',
-            gap: 16,
-          }}
-        >
+        <div className="mb-14 grid gap-12 md:grid-cols-[1.3fr_1fr_1fr]">
+          <div>
+            <BrandMark />
+            <p className="mt-5 max-w-sm text-[14px] leading-relaxed text-zr-muted">{siteConfig.tagline}</p>
+          </div>
+          {footerConfig.columns.map((column) => (
+            <div key={column.title} className="flex flex-col gap-3.5">
+              {column.title && <span className="zr-label mb-1">{column.title}</span>}
+              {column.links.map((link) =>
+                link.href.startsWith('/') ? (
+                  <Link key={link.label} to={link.href} className="nav-link w-fit">
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={(e) => handleClick(e, link.href)}
+                    className="nav-link w-fit"
+                    {...(link.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  >
+                    {link.label}
+                  </a>
+                )
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="flex flex-col items-start justify-between gap-4 border-t border-zr-line pt-6 md:flex-row md:items-center">
           {footerConfig.copyright && (
-            <span
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontWeight: 200,
-                fontSize: 12,
-                color: '#dadada',
-                opacity: 0.7,
-              }}
-            >
-              {footerConfig.copyright}
+            <span className="font-mono text-[12px] text-zr-muted">
+              © {new Date().getFullYear()} {footerConfig.copyright.replace(/^Copyright\s*/i, '')}
             </span>
           )}
           {footerConfig.bottomLinks.length > 0 && (
-            <div className="flex items-center" style={{ gap: 24 }}>
+            <div className="flex items-center gap-6">
               {footerConfig.bottomLinks.map((bottomLink) => (
                 <a
                   key={bottomLink.label}
                   href={bottomLink.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/50 rounded-sm"
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontWeight: 200,
-                    fontSize: 12,
-                    color: '#dadada',
-                    opacity: 0.7,
-                    textDecoration: 'none',
-                    transition: 'opacity 0.3s',
-                  }}
-                  onMouseEnter={(e) => { (e.target as HTMLElement).style.opacity = '1'; }}
-                  onMouseLeave={(e) => { (e.target as HTMLElement).style.opacity = '0.7'; }}
+                  className="nav-link !text-[12px]"
                 >
                   {bottomLink.label}
                 </a>

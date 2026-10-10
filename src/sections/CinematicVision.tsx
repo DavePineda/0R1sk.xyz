@@ -1,150 +1,67 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import { Check } from 'lucide-react';
+import SectionHeader from '../components/SectionHeader';
+import { useReveal } from '../hooks/use-reveal';
 import { architectureConfig } from '../config';
 
 export default function CinematicVision() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const textRef = useRef<HTMLHeadingElement>(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    const text = textRef.current;
-    if (!section || !text) return;
-
-    gsap.set(text, { opacity: 0, y: 40 });
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            gsap.to(text, {
-              opacity: 1,
-              y: 0,
-              duration: 1.2,
-              ease: 'power3.out',
-            });
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
+  const reveal = useReveal<HTMLDivElement>({ stagger: 0.15 });
 
   if (!architectureConfig.sectionLabel && !architectureConfig.title) {
     return null;
   }
 
   return (
-    <section
-      id="cinematic"
-      ref={sectionRef}
-      aria-labelledby="cinematic-title"
-      style={{
-        padding: '150px 5vw 80px',
-        background: '#0a0a0a',
-        position: 'relative',
-        zIndex: 2,
-      }}
-    >
-      <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-        {architectureConfig.sectionLabel && (
-          <div
-            className="mb-6"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: 12,
-              fontWeight: 300,
-              letterSpacing: '3px',
-              textTransform: 'uppercase',
-              color: '#dadada',
-              opacity: 0.6,
-            }}
-          >
-            {architectureConfig.sectionLabel}
-          </div>
-        )}
-        <div
-          className="mb-16"
-          style={{
-            width: '100%',
-            height: 1,
-            background: 'rgba(255, 255, 255, 0.1)',
-          }}
-        />
+    <section id="cinematic" aria-labelledby="cinematic-title" className="zr-section">
+      <div className="zr-container grid items-center gap-14 lg:grid-cols-2">
+        <div ref={reveal(0)}>
+          <SectionHeader
+            id="cinematic-title"
+            index="05"
+            label={architectureConfig.sectionLabel}
+            title={architectureConfig.title}
+            description={architectureConfig.description}
+          />
+          {architectureConfig.values.length > 0 && (
+            <ul className="-mt-4 grid gap-3 sm:grid-cols-2">
+              {architectureConfig.values.map((value) => (
+                <li key={value} className="flex items-center gap-3 text-[15px] text-zr-text">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-zr-accent/15 text-zr-accent">
+                    <Check size={14} strokeWidth={2.5} aria-hidden="true" />
+                  </span>
+                  {value}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
-        <div className="relative">
-          {architectureConfig.videoPath && (
-            <div
-              className="relative overflow-hidden"
-              style={{
-                width: '100%',
-                maxWidth: '80vw',
-                margin: '0 auto',
-                aspectRatio: '16/9',
-              }}
-            >
+        {architectureConfig.videoPath && (
+          <div ref={reveal(1)} className="relative">
+            {/* Esquinas tipo visor */}
+            <span className="absolute -left-2 -top-2 h-6 w-6 border-l-2 border-t-2 border-zr-accent" aria-hidden="true" />
+            <span className="absolute -bottom-2 -right-2 h-6 w-6 border-b-2 border-r-2 border-zr-accent" aria-hidden="true" />
+            <div className="relative aspect-video overflow-hidden rounded-xl border border-zr-line">
               <video
-                ref={videoRef}
                 src={architectureConfig.videoPath}
                 autoPlay
                 muted
                 loop
                 playsInline
                 preload="metadata"
-                className="w-full h-full object-cover"
-                style={{ display: 'block' }}
+                className="block h-full w-full object-cover"
                 aria-label="Video corporativo de Zero R1sk"
               />
+              <div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zr-bg/70 via-transparent to-transparent"
+                aria-hidden="true"
+              />
+              <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-md bg-zr-bg/70 px-3 py-1.5 font-mono text-[11px] text-zr-accent backdrop-blur">
+                <span className="zr-pulse-dot" aria-hidden="true" />
+                Zero R1sk · desde 2020
+              </div>
             </div>
-          )}
-
-          <div
-            ref={textRef}
-            className="flex flex-col md:flex-row md:items-center"
-            style={{ marginTop: 100, gap: '60px' }}
-          >
-            {architectureConfig.title && (
-              <h2
-                id="cinematic-title"
-                style={{
-                  fontFamily: "'EB Garamond', serif",
-                  fontWeight: 400,
-                  fontSize: 'clamp(32px, 4vw, 64px)',
-                  lineHeight: 1.15,
-                  letterSpacing: '-1px',
-                  color: '#ffffff',
-                  margin: 0,
-                  flex: '0 0 50%',
-                  textWrap: 'balance',
-                }}
-              >
-                {architectureConfig.title}
-              </h2>
-            )}
-            {architectureConfig.description && (
-              <p
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontWeight: 200,
-                  fontSize: 17,
-                  lineHeight: 1.85,
-                  color: '#dadada',
-                  margin: 0,
-                  flex: '1 1 50%',
-                  textWrap: 'pretty',
-                }}
-              >
-                {architectureConfig.description}
-              </p>
-            )}
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
