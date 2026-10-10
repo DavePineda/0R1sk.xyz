@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-function initAmberCascades(canvas: HTMLCanvasElement, container: HTMLDivElement) {
+function initDigitalRain(canvas: HTMLCanvasElement, container: HTMLDivElement) {
   const ctx = canvas.getContext('2d')!;
   let width = 0;
   let height = 0;
@@ -16,9 +16,9 @@ function initAmberCascades(canvas: HTMLCanvasElement, container: HTMLDivElement)
   const WAVE_RESOLUTION = isMobile ? 6 : 4;
   const MAX_RIPPLES = isMobile ? 20 : 40;
 
-  const mathSymbols = '\u00D7\u00F7\u2206\u03A3\u03A0\u221A\u221E\u2248\u2260\u2264\u2265\u222B\u2202\u03B1\u03B2\u03B3\u03B8\u03C6\u03C8\u03C9';
-  const numbers = '0123456789';
-  const allChars = numbers + mathSymbols;
+  const codeSymbols = '{}<>/$#_=;:[]|';
+  const hex = '0123456789ABCDEF01010101';
+  const allChars = hex + codeSymbols;
   const randomChar = () => allChars[Math.floor(Math.random() * allChars.length)];
 
   interface CharState {
@@ -37,6 +37,7 @@ function initAmberCascades(canvas: HTMLCanvasElement, container: HTMLDivElement)
     restartDelay: number;
     opacity: number;
     hitWater: boolean;
+    amber: boolean;
   }
 
   interface Ripple {
@@ -88,6 +89,7 @@ function initAmberCascades(canvas: HTMLCanvasElement, container: HTMLDivElement)
       restartDelay: 0,
       opacity: 0.6 + Math.random() * 0.4,
       hitWater: false,
+      amber: Math.random() < 0.12,
     };
   }
 
@@ -148,8 +150,7 @@ function initAmberCascades(canvas: HTMLCanvasElement, container: HTMLDivElement)
     const time = timestamp / 1000;
 
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = '#0a0a0a';
-    ctx.fillRect(0, 0, width, height);
+    // Fondo transparente: deja ver la imagen del hero detrás
 
     if (!reducedMotion) {
       // Update columns
@@ -220,7 +221,7 @@ function initAmberCascades(canvas: HTMLCanvasElement, container: HTMLDivElement)
     }
 
     // Draw columns
-    ctx.font = `${FONT_SIZE}px "Fira Code", "SF Mono", monospace`;
+    ctx.font = `${FONT_SIZE}px "GeistMono", "SF Mono", monospace`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
 
@@ -244,13 +245,14 @@ function initAmberCascades(canvas: HTMLCanvasElement, container: HTMLDivElement)
         if (brightness < 0.02) continue;
 
         let r: number, g: number, b: number;
-        if (j === 0) { r = 255; g = 245; b = 220; }
-        else if (j < 3) { r = 240; g = 200; b = 140; }
-        else { r = 200; g = 149; b = 108; }
+        if (j === 0) { r = 235; g = 248; b = 255; }
+        else if (col.amber) { r = 255; g = 165; b = 80; }
+        else if (j < 3) { r = 140; g = 220; b = 255; }
+        else { r = 70; g = 150; b = 230; }
 
         ctx.fillStyle = `rgba(${r},${g},${b},${brightness})`;
         if (j === 0) {
-          ctx.shadowColor = 'rgba(255, 220, 160, 0.6)';
+          ctx.shadowColor = 'rgba(120, 210, 255, 0.8)';
           ctx.shadowBlur = 8;
         }
         ctx.fillText(col.chars[j % col.chars.length].char, col.x + FONT_SIZE * 0.5, charY);
@@ -262,8 +264,8 @@ function initAmberCascades(canvas: HTMLCanvasElement, container: HTMLDivElement)
 
     // Draw water surface
     const waterGrad = ctx.createLinearGradient(0, waterSurface, 0, height);
-    waterGrad.addColorStop(0, 'rgba(15, 13, 11, 0.6)');
-    waterGrad.addColorStop(1, 'rgba(10, 10, 10, 0.95)');
+    waterGrad.addColorStop(0, 'rgba(4, 8, 18, 0.55)');
+    waterGrad.addColorStop(1, 'rgba(4, 6, 12, 0.95)');
     ctx.fillStyle = waterGrad;
     ctx.fillRect(0, waterSurface - 2, width, height - waterSurface + 2);
 
@@ -277,7 +279,7 @@ function initAmberCascades(canvas: HTMLCanvasElement, container: HTMLDivElement)
       if (x === 0) ctx.moveTo(x, py);
       else ctx.lineTo(x, py);
     }
-    ctx.strokeStyle = 'rgba(200, 170, 130, 0.25)';
+    ctx.strokeStyle = 'rgba(255, 159, 67, 0.35)';
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
@@ -289,7 +291,7 @@ function initAmberCascades(canvas: HTMLCanvasElement, container: HTMLDivElement)
         if (ringRadius <= 0) continue;
         ctx.beginPath();
         ctx.ellipse(r.x, r.y + ring * 2, ringRadius, ringRadius * 0.3, 0, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(200, 170, 130, ${alpha * (1 - ring * 0.3)})`;
+        ctx.strokeStyle = `rgba(120, 210, 255, ${alpha * (1 - ring * 0.3)})`;
         ctx.lineWidth = 1 - ring * 0.2;
         ctx.stroke();
       }
@@ -368,13 +370,13 @@ function initAmberCascades(canvas: HTMLCanvasElement, container: HTMLDivElement)
   };
 }
 
-export default function AmberCascades() {
+export default function DigitalRain() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!canvasRef.current || !containerRef.current) return;
-    const cleanup = initAmberCascades(canvasRef.current, containerRef.current);
+    const cleanup = initDigitalRain(canvasRef.current, containerRef.current);
     return cleanup;
   }, []);
 

@@ -45,21 +45,54 @@ export const navigationConfig: NavigationConfig = {
 // Hero
 // ============================================================
 
+export interface HeroStat {
+  value: string;
+  label: string;
+}
+
+export interface TerminalLine {
+  kind: "cmd" | "ok" | "warn" | "info" | "done";
+  text: string;
+}
+
 export interface HeroConfig {
+  eyebrow: string;
   title: string;
-  subtitleLine1: string;
-  subtitleLine2: string;
+  titleHighlight: string;
+  subtitle: string;
   ctaText: string;
   secondaryCtaText: string;
+  stats: HeroStat[];
+  backgroundImage: string;
+  terminalTitle: string;
+  terminalLines: TerminalLine[];
 }
 
 export const heroConfig: HeroConfig = {
-  title: "Zero R1sk",
-  subtitleLine1:
-    "Consultoría en Ciberseguridad. Protegemos tu información y sistemas de las amenazas digitales.",
-  subtitleLine2: "Tecnología de vanguardia con enfoque proactivo.",
-  ctaText: "Conocer servicios",
-  secondaryCtaText: "Hablar con un experto",
+  eyebrow: "Pentesting · Evaluación de vulnerabilidades · Consultoría",
+  title: "Encontramos tus vulnerabilidades",
+  titleHighlight: "antes que los atacantes.",
+  subtitle:
+    "Consultoría en ciberseguridad con enfoque ofensivo. Simulamos ataques reales sobre tu infraestructura y te entregamos un plan claro y priorizado para cerrar cada brecha.",
+  ctaText: "Solicitar evaluación",
+  secondaryCtaText: "Ver servicios",
+  stats: [
+    { value: "2020", label: "Protegiendo empresas desde" },
+    { value: "OWASP · NIST · PTES", label: "Metodologías aplicadas" },
+    { value: "ISO 27001 · eJPT", label: "Certificaciones" },
+    { value: "< 24 h", label: "Tiempo de respuesta" },
+  ],
+  backgroundImage: "images/research-1.jpg",
+  terminalTitle: "zr@pentest: ~/engagement",
+  terminalLines: [
+    { kind: "cmd", text: "zr-audit --objetivo empresa.co --alcance autorizado" },
+    { kind: "info", text: "Reconocimiento pasivo (OSINT, DNS, subdominios)" },
+    { kind: "ok", text: "42 activos expuestos identificados" },
+    { kind: "info", text: "Escaneo y enumeración de servicios" },
+    { kind: "warn", text: "3 servicios con configuración insegura" },
+    { kind: "warn", text: "1 vulnerabilidad crítica · CVSS 9.8" },
+    { kind: "done", text: "Informe priorizado y plan de remediación listo" },
+  ],
 };
 
 // ============================================================
@@ -267,6 +300,7 @@ export interface ArchitectureConfig {
   videoPath: string;
   title: string;
   description: string;
+  values: string[];
 }
 
 export const architectureConfig: ArchitectureConfig = {
@@ -275,6 +309,7 @@ export const architectureConfig: ArchitectureConfig = {
   title: "Acerca de Zero R1sk",
   description:
     "En Zero R1sk somos apasionados por proteger lo que más importa: la información y los activos digitales de nuestros clientes. Nuestro equipo de expertos combina tecnología de vanguardia con un profundo conocimiento del panorama de la ciberseguridad. Creemos en la proactividad sobre la reactividad, la educación, la adaptabilidad continua y la ética con enfoque personalizado.",
+  values: ["Proactividad sobre reactividad", "Educación y concientización", "Adaptabilidad continua", "Ética y enfoque personalizado"],
 };
 
 // ============================================================
@@ -283,67 +318,28 @@ export const architectureConfig: ArchitectureConfig = {
 
 export interface ResearchProject {
   title: string;
-  year: string;
   discipline: string;
   image: string;
 }
 
 export interface ResearchConfig {
   sectionLabel: string;
+  title: string;
   projects: ResearchProject[];
 }
 
 export const researchConfig: ResearchConfig = {
   sectionLabel: "Áreas de Expertise",
+  title: "Cobertura completa de tu superficie de ataque",
   projects: [
-    {
-      title: "Gestión de Riesgos",
-      year: "2025",
-      discipline: "Estrategia de Seguridad",
-      image: "images/research-1.jpg",
-    },
-    {
-      title: "Protección de Datos",
-      year: "2025",
-      discipline: "Cumplimiento Normativo",
-      image: "images/research-3.jpg",
-    },
-    {
-      title: "Análisis de Amenazas",
-      year: "2025",
-      discipline: "Inteligencia de Amenazas",
-      image: "images/research-4.jpg",
-    },
-    {
-      title: "Seguridad en la Nube",
-      year: "2024",
-      discipline: "Cloud Security",
-      image: "images/capability-1.jpg",
-    },
-    {
-      title: "Auditoría de Seguridad",
-      year: "2024",
-      discipline: "Evaluación de Controles",
-      image: "images/capability-3.jpg",
-    },
-    {
-      title: "Seguridad de Redes",
-      year: "2023",
-      discipline: "Infraestructura",
-      image: "images/research-1.jpg",
-    },
-    {
-      title: "Concienciación",
-      year: "2023",
-      discipline: "Formación y Capacitación",
-      image: "images/research-2.jpg",
-    },
-    {
-      title: "Pentesting",
-      year: "2023",
-      discipline: "Pruebas de Intrusión",
-      image: "images/research-3.jpg",
-    },
+    { title: "Pentesting", discipline: "Pruebas de intrusión", image: "images/research-6.jpg" },
+    { title: "Análisis de Amenazas", discipline: "Inteligencia de amenazas", image: "images/research-4.jpg" },
+    { title: "Seguridad de Redes", discipline: "Infraestructura", image: "images/research-1.jpg" },
+    { title: "Seguridad en la Nube", discipline: "Cloud security", image: "images/capability-1.jpg" },
+    { title: "Auditoría de Seguridad", discipline: "Evaluación de controles", image: "images/capability-3.jpg" },
+    { title: "Protección de Datos", discipline: "Cumplimiento normativo", image: "images/research-3.jpg" },
+    { title: "Concienciación", discipline: "Formación y capacitación", image: "images/research-2.jpg" },
+    { title: "Gestión de Riesgos", discipline: "Estrategia de seguridad", image: "images/research-5.jpg" },
   ],
 };
 
@@ -356,6 +352,9 @@ export interface ContactConfig {
   title: string;
   description: string;
   phone: string;
+  whatsapp: string;
+  whatsappMessage: string;
+  web3formsKey: string;
   email: string;
   schedule: string;
   location: string;
@@ -377,6 +376,10 @@ export const contactConfig: ContactConfig = {
   description:
     "Cuéntanos sobre tu empresa o infraestructura. Nuestro equipo analizará tu caso y te contactará en menos de 24 horas.",
   phone: "+57 300 436 97 73",
+  whatsapp: "573004369773",
+  whatsappMessage: "Hola Zero R1sk, quiero información sobre una evaluación de seguridad.",
+  // Access key de https://web3forms.com (es pública: está pensada para ir en el frontend)
+  web3formsKey: "1664d893-8182-45f8-98cf-3e7f0c5d15d9",
   email: "david.garcia@0r1sk.xyz",
   schedule: "Lunes a Viernes 07:00-18:00",
   location: "Cali, Colombia",
@@ -414,7 +417,7 @@ export interface FooterConfig {
 }
 
 export const footerConfig: FooterConfig = {
-  heading: "Contáctenos",
+  heading: "¿Listo para poner a prueba tu seguridad?",
   columns: [
     {
       title: "Servicios",

@@ -12,4 +12,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // Dominios publicados a través del túnel de Cloudflare
+  server: {
+    allowedHosts: ['newsite.0r1sk.xyz'],
+  },
+  preview: {
+    port: 5173,
+    strictPort: true,
+    allowedHosts: ['newsite.0r1sk.xyz'],
+  },
 });
