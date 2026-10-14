@@ -299,11 +299,11 @@ export const certificationsConfig: CertificationsConfig = {
     },
     {
       name: "NSE 3",
-      fullName: "Fortinet NSE 3 · FortiGate Operator",
+      fullName: "Fortinet NSE 3 Certified in Cybersecurity",
       issuer: "Fortinet",
       description:
-        "Certificación de Fortinet (antes Fortinet Certified Associate in Cybersecurity) que valida la operación de FortiGate: políticas de firewall, autenticación, VPN, inspección SSL, antivirus, filtrado web, control de aplicaciones e IPS.",
-      verifyUrl: "https://www.credly.com/badges/a8e3c28b-b3e9-4d1c-9d02-6b73ce769e92",
+        "Certificación de Fortinet que valida la operación de FortiGate: políticas de firewall, autenticación, VPN, inspección SSL, antivirus, filtrado web, control de aplicaciones e IPS.",
+      verifyUrl: "https://www.credly.com/badges/5fc94a23-3ff5-4a1b-9426-9cefe853829e",
     },
   ],
 };
