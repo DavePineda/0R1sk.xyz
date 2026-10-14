@@ -79,7 +79,7 @@ export const heroConfig: HeroConfig = {
   stats: [
     { value: "2020", label: "Protegiendo empresas desde" },
     { value: "OWASP · NIST · PTES", label: "Metodologías aplicadas" },
-    { value: "ISO 27001 · eJPT", label: "Certificaciones" },
+    { value: "ISO 27001 · eJPT · FCA", label: "Certificaciones" },
     { value: "< 24 h", label: "Tiempo de respuesta" },
   ],
   backgroundImage: "images/research-1.jpg",
@@ -264,6 +264,7 @@ export interface CertificationItem {
   name: string;
   fullName: string;
   description: string;
+  verifyUrl?: string;
 }
 
 export interface CertificationsConfig {
@@ -287,6 +288,14 @@ export const certificationsConfig: CertificationsConfig = {
       fullName: "Junior Penetration Tester",
       description:
         "Contamos con certificación práctica en pruebas de intrusión que valida nuestras capacidades reales en reconocimiento, escaneo, enumeración y explotación controlada de vulnerabilidades.",
+      verifyUrl: "https://certs.ine.com/1057e728-490d-46b8-b29a-d8ede2bbb3fa",
+    },
+    {
+      name: "FCA",
+      fullName: "Fortinet Certified Associate in Cybersecurity",
+      description:
+        "Certificación de Fortinet (antes NSE 3) que valida nuestro dominio de los fundamentos de ciberseguridad: panorama de amenazas, seguridad de red, firewalls, protección de endpoints y seguridad en la nube.",
+      verifyUrl: "https://www.credly.com/badges/a8e3c28b-b3e9-4d1c-9d02-6b73ce769e92",
     },
   ],
 };

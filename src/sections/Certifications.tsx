@@ -1,4 +1,4 @@
-import { BadgeCheck } from 'lucide-react';
+import { ArrowUpRight, BadgeCheck } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import { useReveal } from '../hooks/use-reveal';
 import { certificationsConfig } from '../config';
@@ -33,6 +33,22 @@ export default function Certifications() {
               <div className="flex-1">
                 <h3 className="mb-2 font-display text-xl font-semibold text-white">{item.fullName}</h3>
                 <p className="text-[15px] leading-relaxed text-zr-muted">{item.description}</p>
+                {item.verifyUrl && (
+                  <a
+                    href={item.verifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Verificar credencial ${item.fullName} (abre en una nueva pestaña)`}
+                    className="group mt-4 inline-flex items-center gap-1.5 font-mono text-[13px] text-zr-accent"
+                  >
+                    Verificar credencial
+                    <ArrowUpRight
+                      size={15}
+                      className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                  </a>
+                )}
               </div>
             </div>
           ))}
