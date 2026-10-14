@@ -79,7 +79,7 @@ export const heroConfig: HeroConfig = {
   stats: [
     { value: "2020", label: "Protegiendo empresas desde" },
     { value: "OWASP · NIST · PTES", label: "Metodologías aplicadas" },
-    { value: "ISO 27001 · eJPT", label: "Certificaciones" },
+    { value: "ISO 27001 · eJPT · NSE 3", label: "Credenciales del equipo" },
     { value: "< 24 h", label: "Tiempo de respuesta" },
   ],
   backgroundImage: "images/research-1.jpg",
@@ -262,8 +262,12 @@ export const methodologyConfig: MethodologyConfig = {
 
 export interface CertificationItem {
   name: string;
+  badge?: string;
   fullName: string;
+  issuer: string;
   description: string;
+  verifyUrl?: string;
+  verifyNote?: string;
 }
 
 export interface CertificationsConfig {
@@ -278,15 +282,28 @@ export const certificationsConfig: CertificationsConfig = {
   items: [
     {
       name: "ISO 27001",
-      fullName: "ISO/IEC 27001",
+      badge: "ISO",
+      fullName: "Auditor Interno ISO/IEC 27001",
+      issuer: "Cualicontrol-ACI · TÜV NORD Group",
       description:
-        "Gestionamos la seguridad de la información bajo un Sistema de Gestión de Seguridad de la Información (SGSI) certificado, garantizando confidencialidad, integridad y disponibilidad de tus datos.",
+        "Formación certificada como auditor interno de Sistemas de Gestión de Seguridad de la Información (SGSI): contexto y liderazgo, planificación y gestión de riesgos, controles de seguridad, evaluación del desempeño y mejora continua.",
+      verifyNote: "Verificable bajo solicitud",
     },
     {
       name: "eJPT",
       fullName: "Junior Penetration Tester",
+      issuer: "INE Security",
       description:
         "Contamos con certificación práctica en pruebas de intrusión que valida nuestras capacidades reales en reconocimiento, escaneo, enumeración y explotación controlada de vulnerabilidades.",
+      verifyUrl: "https://certs.ine.com/1057e728-490d-46b8-b29a-d8ede2bbb3fa",
+    },
+    {
+      name: "NSE 3",
+      fullName: "Fortinet NSE 3 Certified in Cybersecurity",
+      issuer: "Fortinet",
+      description:
+        "Certificación de Fortinet que valida la operación de FortiGate: políticas de firewall, autenticación, VPN, inspección SSL, antivirus, filtrado web, control de aplicaciones e IPS.",
+      verifyUrl: "https://www.credly.com/badges/5fc94a23-3ff5-4a1b-9426-9cefe853829e",
     },
   ],
 };
