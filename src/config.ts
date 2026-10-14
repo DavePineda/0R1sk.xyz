@@ -79,7 +79,7 @@ export const heroConfig: HeroConfig = {
   stats: [
     { value: "2020", label: "Protegiendo empresas desde" },
     { value: "OWASP · NIST · PTES", label: "Metodologías aplicadas" },
-    { value: "ISO 27001 · eJPT · FCA", label: "Credenciales del equipo" },
+    { value: "ISO 27001 · eJPT · NSE 3", label: "Credenciales del equipo" },
     { value: "< 24 h", label: "Tiempo de respuesta" },
   ],
   backgroundImage: "images/research-1.jpg",
@@ -262,6 +262,7 @@ export const methodologyConfig: MethodologyConfig = {
 
 export interface CertificationItem {
   name: string;
+  badge?: string;
   fullName: string;
   issuer: string;
   description: string;
@@ -281,6 +282,7 @@ export const certificationsConfig: CertificationsConfig = {
   items: [
     {
       name: "ISO 27001",
+      badge: "ISO",
       fullName: "Auditor Interno ISO/IEC 27001",
       issuer: "Cualicontrol-ACI · TÜV NORD Group",
       description:
@@ -296,11 +298,11 @@ export const certificationsConfig: CertificationsConfig = {
       verifyUrl: "https://certs.ine.com/1057e728-490d-46b8-b29a-d8ede2bbb3fa",
     },
     {
-      name: "FCA",
-      fullName: "Fortinet Certified Associate in Cybersecurity",
+      name: "NSE 3",
+      fullName: "Fortinet NSE 3 · FortiGate Operator",
       issuer: "Fortinet",
       description:
-        "Certificación de Fortinet (antes NSE 3) que valida nuestro dominio de los fundamentos de ciberseguridad: panorama de amenazas, seguridad de red, firewalls, protección de endpoints y seguridad en la nube.",
+        "Certificación de Fortinet (antes Fortinet Certified Associate in Cybersecurity) que valida la operación de FortiGate: políticas de firewall, autenticación, VPN, inspección SSL, antivirus, filtrado web, control de aplicaciones e IPS.",
       verifyUrl: "https://www.credly.com/badges/a8e3c28b-b3e9-4d1c-9d02-6b73ce769e92",
     },
   ],

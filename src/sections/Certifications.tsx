@@ -32,7 +32,7 @@ export default function Certifications() {
                 aria-hidden="true"
               >
                 <BadgeCheck size={22} className="mb-1 text-zr-accent" strokeWidth={1.75} />
-                <span className="font-mono text-[13px] text-white">{item.name.split(' ')[0]}</span>
+                <span className="whitespace-nowrap font-mono text-[13px] text-white">{item.badge ?? item.name}</span>
               </div>
               <div className="flex flex-1 flex-col self-stretch">
                 <span className="mb-2 font-mono text-[12px] uppercase tracking-wider text-zr-amber">{item.issuer}</span>
